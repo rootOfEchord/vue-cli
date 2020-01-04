@@ -4,7 +4,7 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const pages = require('./entry')
 const entry = argv.entry || process.argv[6]
-console.log(process.argv,entry)
+console.log(process.argv, entry)
 const useRem = pages[entry].useRem || ''
 const preRender = pages[entry].preRender || ''
 console.log('pages', pages, entry);
@@ -21,16 +21,16 @@ module.exports = {
     chainWebpack: config => {
         if (useRem) {
             config.module
-                .rule('css')
-                .test(/\.css$/)
+                .rule('less')
                 .oneOf('vue')
-                .resourceQuery(/\?vue/)
-                .use('px2rem')
+                .use('px2rem-loader')
                 .loader('px2rem-loader')
-                .options({
-                    remUnit: 75,
-                })
+                .before('postcss-loader') // this makes it work.
+                .options({ remUnit: 192, remPrecision: 8 })
+                .end()
         }
+        // 热更新
+        config.resolve.symlinks(true)
     },
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'production' && preRender) {
@@ -43,7 +43,7 @@ module.exports = {
                         //要求-给的WebPack-输出应用程序的路径预渲染。
                         staticDir: path.join(__dirname, 'dist'),
                         //必需，要渲染的路线。
-                        routes: ['/','/about'],
+                        routes: ['/', '/about'],
                         //必须，要使用的实际渲染器，没有则不能预编译
                         renderer: new Renderer({
                             inject: {
