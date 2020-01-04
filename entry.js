@@ -1,8 +1,7 @@
 const argv = require('yargs').alias('e', 'entry').argv
-const entry = argv.entry || process.argv[6]
-console.log(process.argv,entry)
-console.log('process.env', process.env.NODE_ENV)
+const entry = argv.entry
 console.log('argv', argv)
+console.log('process.argv', process.argv)
 console.log(process.env.NODE_ENV==='development'?'正在编译---':'正在打包---', entry)
 
 

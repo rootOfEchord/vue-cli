@@ -15,8 +15,16 @@ module.exports = {
     devServer: {
         host: 'localhost',
         port: 39200, // 端口号
-        // inline: false,
-        // open: true, //配置自动启动浏览器
+        proxy: {
+            '/api': {
+                target: 'http://demo.jixinghai.com', // target host
+                ws: true, // proxy websockets
+                changeOrigin: true, // needed for virtual hosted sites
+                pathRewrite: {
+                    '^/api': '' // rewrite path
+                }
+            },
+        }
     },
     chainWebpack: config => {
         if (useRem) {
@@ -34,7 +42,7 @@ module.exports = {
     },
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'production' && preRender) {
-            console.log('222222')
+            console.log('正在进行预渲染打包 请稍等')
             // 为生产环境修改配置...
             return {
                 plugins: [
