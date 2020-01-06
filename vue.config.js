@@ -34,7 +34,7 @@ module.exports = {
                 .use('px2rem-loader')
                 .loader('px2rem-loader')
                 .before('postcss-loader') // this makes it work.
-                .options({ remUnit: 192, remPrecision: 8 })
+                .options({ remUnit: 75, remPrecision: 8 })
                 .end()
         }
         // 热更新

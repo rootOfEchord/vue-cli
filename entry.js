@@ -25,7 +25,7 @@ const pages = {
 		template: 'src/pages/home/index.html',
 		// 在 dist/index.html 的输出
 		filename: 'index.html',
-		useRem: false,
+		useRem: true,
 		// 是否在build时使用预渲染
 		preRender: true
 	},
