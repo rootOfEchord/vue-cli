@@ -37,6 +37,11 @@
     "env": {
       "node": true
     },
+    "globals": {
+      "gIsDev": true,
+      "gIsDevProduction": true,
+      "gIsProduction": true
+    },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"

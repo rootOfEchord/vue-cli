@@ -10,6 +10,7 @@
 
         mounted() {
             // console.log('process.env', process.env)
+            console.log('isDev', gIsDev)
         }
     };
 </script>

@@ -4,11 +4,22 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const pages = require('./entry')
 const entry = argv.entry || process.argv[6]
-console.log(process.argv, entry)
 const useRem = pages[entry].useRem || ''
 const preRender = pages[entry].preRender || ''
-console.log('pages', pages, entry);
 
+function log(msg, { title = 'TITLE', color = 'green' } = {}) {
+    const COLOR_CODE = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'].indexOf(color)
+    if (COLOR_CODE >= 0) {
+        const TITLE_STR = title ? `\x1b[4${COLOR_CODE};30m ${title} \x1b[0m ` : ''
+        console.log(`${TITLE_STR}\x1b[3${COLOR_CODE}m${msg}\x1b[;0m`)
+    }
+    else {
+        console.log(title ? `${title} ${msg}` : msg)
+    }
+}
+log(process.env.NODE_ENV, { title: 'process.env.NODE_ENV' })
+log(process.env.BASE_URL, { title: 'process.env.BASE_URL' })
+log(process.env.VUE_APP_TITLE, { title: 'process.env.VUE_APP_TITLE' })
 module.exports = {
     publicPath: '/',
     pages: pages,
@@ -42,7 +53,7 @@ module.exports = {
     },
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'production' && preRender) {
-            console.log('正在进行预渲染打包 请稍等')
+            log('正在进行预渲染打包 请稍等')
             // 为生产环境修改配置...
             return {
                 plugins: [

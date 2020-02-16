@@ -4,9 +4,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="<%= NODE_ENV %>/header/head.css">
 	<title>星海车队</title>
 </head>
 <body>
 	<div id="app" class="app"></div>
+	<script>
+		window.gIsDev = false
+		window.gIsDevProduction = false
+		window.gIsProduction = false
+		<% if (process.env.NODE_ENV === 'development'){%>
+			window.gIsDev = true
+		<% }%>
+		<% if (process.env.NODE_ENV === 'devproduction'){%>
+			window.gIsDevProduction = true
+		<% }%>
+		<% if (process.env.NODE_ENV === 'production'){%>
+			window.gIsProduction = true
+		<% }%>
+	</script>
 </body>
 </html>
